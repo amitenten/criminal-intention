@@ -1,5 +1,6 @@
 package com.augmentis.ayp.crimin;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +22,10 @@ public class CrimePagerActivity extends FragmentActivity {
     private List<Crime> _crimes;
     private int _position;
     private UUID _crimeId;
+    private List<Integer> positionChange = new ArrayList<>();
+
+    public CrimePagerActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +34,6 @@ public class CrimePagerActivity extends FragmentActivity {
 
         _crimeId = (UUID) getIntent().getSerializableExtra(CRIME_ID);
         _position = (int) getIntent().getExtras().get(CRIME_POSITION);
-
         _viewPager = (ViewPager) findViewById(R.id.activity_crime_pager_view_pager);
 
         _crimes = CrimeLab.getInstance(this).getCrime();
@@ -48,8 +54,22 @@ public class CrimePagerActivity extends FragmentActivity {
         });
 
         //set position by get position from CrimeLab
-        //int position = CrimeLab.getInstance(this).getCrimesPositionById(_crimeId);
-        _viewPager.setCurrentItem(_position);
+        int position = CrimeLab.getInstance(this).getCrimesPositionById(_crimeId);
+        _viewPager.setCurrentItem(position);
+    }
+
+    protected void addPageUpdate(int position){
+        if (positionChange.contains(position)){
+            return;
+        }
+
+        positionChange.add(position);
+
+        Intent intent = new Intent();
+        Integer[] positions = positionChange.toArray(new Integer[0]) ;
+        intent.putExtra("position", positions);
+        Log.d(CrimeListFragment.TAG, "Send position back : " + positions);
+        setResult(Activity.RESULT_OK, intent);
     }
 
     private static final String CRIME_ID = "CrimeFragment.CRIME_ID";

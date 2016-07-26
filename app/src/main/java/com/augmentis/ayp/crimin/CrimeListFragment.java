@@ -26,7 +26,7 @@ public class CrimeListFragment extends Fragment {
     private RecyclerView _crimeRecyclerView;
     private CrimeAdapter _adapter;
     protected static final String TAG = "CRIME_LIST";
-    private int crimePos;
+    private Integer[] crimePos;
 
     @Nullable
     @Override
@@ -53,7 +53,12 @@ public class CrimeListFragment extends Fragment {
             _crimeRecyclerView.setAdapter(_adapter);
         } else {
             //_adapter.notifyDataSetChanged();
-            _adapter.notifyItemChanged(crimePos);
+            if (crimePos != null) {
+                for (Integer pos : crimePos) {
+                    _adapter.notifyItemChanged(pos);
+                    Log.d(TAG, "notify change at " + pos);
+                }
+            }
         }
 
     }
@@ -72,16 +77,16 @@ public class CrimeListFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_UPDATED_CRIME){
-            if (resultCode == Activity.RESULT_OK){
-                crimePos = (int) data.getExtras().get("position");
+        if (requestCode == REQUEST_UPDATED_CRIME) {
+            if (resultCode == Activity.RESULT_OK) {
+                crimePos = (Integer[]) data.getExtras().get("position");
                 Log.d(TAG, "get crimePos = " + crimePos);
             }
-            Log.d(TAG, "Return from CrimeFragmet ");
+            Log.d(TAG, "Return from CrimeFragment ");
         }
     }
 
-    private  class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView _titleTextView;
         public TextView _dateTextView;
         public CheckBox _solvedCheckBox;
@@ -123,6 +128,7 @@ public class CrimeListFragment extends Fragment {
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
         protected List<Crime> _crimes;
         private int ViewCreatingCount;
+
         public CrimeAdapter(List<Crime> crimes) {
             this._crimes = crimes;
         }
@@ -150,5 +156,7 @@ public class CrimeListFragment extends Fragment {
         public int getItemCount() {
             return _crimes.size();
         }
+
+
     }
 }
