@@ -1,7 +1,6 @@
 package com.augmentis.ayp.crimin;
 
 import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -47,7 +45,7 @@ public class CrimeListFragment extends Fragment {
      * Update UI
      */
     public void updateUI() {
-        CrimeLab crimeLab = CrimeLab.getInstance();
+        CrimeLab crimeLab = CrimeLab.getInstance(getActivity());
         List<Crime> crimes = crimeLab.getCrime();
 
         if (_adapter == null) {
@@ -116,7 +114,8 @@ public class CrimeListFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Log.d(TAG, "send position : " + _position);
-            Intent intent = CrimeActivity.newIntent(getActivity(), _crime.getId(), _position);
+            //Intent intent = CrimeActivity.newIntent(getActivity(), _crime.getId(), _position);
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), _crime.getId(), _position);
             startActivityForResult(intent, REQUEST_UPDATED_CRIME);
         }
     }

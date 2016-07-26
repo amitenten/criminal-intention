@@ -2,7 +2,6 @@ package com.augmentis.ayp.crimin;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Checkable;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
@@ -53,7 +51,7 @@ public class CrimeFragment extends Fragment {
 
         UUID crimeId = (UUID) getArguments().getSerializable(CRIME_ID);
         position = (int) getArguments().getInt(CRIME_POSITION);
-        crime = CrimeLab.getInstance().getCrimesById(crimeId);
+        crime = CrimeLab.getInstance(getActivity()).getCrimesById(crimeId);
         Log.d(CrimeListFragment.TAG, "crime.getId()= " + crime.getId());
         Log.d(CrimeListFragment.TAG, "crime.getId()= " + crime.getTitle());
     }
