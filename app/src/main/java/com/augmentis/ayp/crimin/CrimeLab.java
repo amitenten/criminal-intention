@@ -23,14 +23,6 @@ public class CrimeLab {
 
     private CrimeLab(){
         crimeList = new ArrayList<>();
-
-        for (int i = 1; i <= 100; i++){
-            Crime crime = new Crime();
-            crime.setTitle("Crime #" + i);
-            crime.setSolved(i%2==0);
-
-            crimeList.add(crime);
-        }
     }
 
     public Crime getCrimesById(UUID uuid) {
@@ -67,4 +59,10 @@ public class CrimeLab {
 //            System.out.println(CrimeLab.getInstance(null));
         }
     }
+
+    public void addCrime(Crime crime) {
+        crimeList.add(crime);
+    }
+
+    public void deleteCrime(Crime crime) {crimeList.remove(crimeList.lastIndexOf(crime));}
 }
