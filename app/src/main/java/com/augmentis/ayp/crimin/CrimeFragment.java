@@ -9,6 +9,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -54,9 +57,32 @@ public class CrimeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
+
         UUID crimeId = (UUID) getArguments().getSerializable(CRIME_ID);
         crime = CrimeLab.getInstance(getActivity()).getCrimesById(crimeId);
 
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.crime_delete_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_item_new_crime:
+                CrimeLab.getInstance(getActivity()).deleteCrime(crime.getId());
+                getActivity().finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -119,15 +145,6 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-        crimeDeleteBtt = (Button) v.findViewById(R.id.delete_button);
-        crimeDeleteBtt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CrimeLab.getInstance(getActivity()).deleteCrime(crime);
-                getActivity().finish();
-            }
-        });
-
         return v;
     }
 
@@ -158,5 +175,12 @@ public class CrimeFragment extends Fragment {
             crime.setCrimedate(date);
             crimeTimeBtt.setText(getFormattedTime(crime.getCrimedate()));
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        CrimeLab.getInstance(getActivity()).updateCrime(crime); //update crime in DB
     }
 }
