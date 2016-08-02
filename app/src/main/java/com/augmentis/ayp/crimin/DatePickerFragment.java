@@ -66,7 +66,6 @@ public class DatePickerFragment extends DialogFragment implements DialogInterfac
 
         Date date = new GregorianCalendar(year,month,day).getTime();
         sendResult(Activity.RESULT_OK, date);
-
     }
 
     private void sendResult(int resultCode, Date date){

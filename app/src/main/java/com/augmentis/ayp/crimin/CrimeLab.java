@@ -3,7 +3,6 @@ package com.augmentis.ayp.crimin;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -32,10 +31,11 @@ public class CrimeLab {
 
     private static ContentValues getContentValues(Crime crime) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(CrimeDbSchema.CrimeTable.Cols.UUID, crime.getId().toString());
-        contentValues.put(CrimeDbSchema.CrimeTable.Cols.TITLE, crime.getTitle());
-        contentValues.put(CrimeDbSchema.CrimeTable.Cols.DATE, crime.getCrimedate().getTime());
-        contentValues.put(CrimeDbSchema.CrimeTable.Cols.SOLVED, (crime.isSolved()) ? 1 : 0);
+        contentValues.put(CrimeTable.Cols.UUID, crime.getId().toString());
+        contentValues.put(CrimeTable.Cols.TITLE, crime.getTitle());
+        contentValues.put(CrimeTable.Cols.DATE, crime.getCrimedate().getTime());
+        contentValues.put(CrimeTable.Cols.SOLVED, (crime.isSolved()) ? 1 : 0);
+        contentValues.put(CrimeTable.Cols.SUSPECT, crime.getSuspect());
         return contentValues;
     }
 

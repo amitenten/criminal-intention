@@ -38,7 +38,6 @@ public class CrimeFragment extends Fragment {
     private EditText editText;
     private Button crimeDateBtt;
     private Button crimeTimeBtt;
-    private Button crimeDeleteBtt;
     private CheckBox crimeSlovedCheckbox;
 
     public CrimeFragment() {
@@ -63,7 +62,6 @@ public class CrimeFragment extends Fragment {
         crime = CrimeLab.getInstance(getActivity()).getCrimesById(crimeId);
 
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

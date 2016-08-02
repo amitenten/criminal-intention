@@ -31,6 +31,9 @@ public class CrimeListFragment extends Fragment {
     private static final java.lang.String SUBTITLE_VISIBLE_STATE = "SUBTITLE_VISIBLE";
 
     private RecyclerView _crimeRecyclerView;
+
+
+
     private CrimeAdapter _adapter;
     protected static final String TAG = "CRIME_LIST";
     private Integer[] crimePos;

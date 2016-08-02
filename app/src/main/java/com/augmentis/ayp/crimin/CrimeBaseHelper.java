@@ -13,7 +13,7 @@ import com.augmentis.ayp.crimin.CrimeDbSchema.CrimeTable;
  */
 public class CrimeBaseHelper extends SQLiteOpenHelper {
 
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
 
     private static final String DATABASE_NAME = "crimeBase.db";
     protected static final String TAG = "CrimeBaseHelper";
@@ -33,12 +33,40 @@ public class CrimeBaseHelper extends SQLiteOpenHelper {
                 + CrimeTable.Cols.UUID + ","
                 + CrimeTable.Cols.TITLE + ","
                 + CrimeTable.Cols.DATE + ","
-                + CrimeTable.Cols.SOLVED + ")"
+                + CrimeTable.Cols.SOLVED + ","
+                + CrimeTable.Cols.SUSPECT + ")"
         );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        Log.d(TAG,"Running upgrade db...");
+        //1. rename tablt to _(oldversion)
+        db.execSQL("alter table " + CrimeTable.NAME + " rename to " + CrimeTable.NAME + "_" + oldVersion);
+
+        Log.d(TAG,"Drop table already...");
+        //2. creat new table
+        onCreate(db);
+
+        //3.insert data from temp table
+        db.execSQL("insert into " + CrimeTable.NAME
+                + " ("
+                + CrimeTable.Cols.UUID + ","
+                + CrimeTable.Cols.TITLE + ","
+                + CrimeTable.Cols.DATE + ","
+                + CrimeTable.Cols.SOLVED
+                + ")"
+                + " select "
+                + CrimeTable.Cols.UUID + ","
+                + CrimeTable.Cols.TITLE + ","
+                + CrimeTable.Cols.DATE + ","
+                + CrimeTable.Cols.SOLVED
+                + " from "
+                + CrimeTable.NAME + "_" + oldVersion
+        );
+        Log.d(TAG,"Insert data from temp table already...");
+        //4.drop temp table
+        db.execSQL("drop table if exists " + CrimeTable.NAME + "_" + oldVersion);
     }
 }
