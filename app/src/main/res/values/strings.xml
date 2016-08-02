@@ -7,10 +7,29 @@
     <string name="date_picker_title">PICK DATE</string>
     <string name="new_crime">New Crime</string>
     <string name="show_subtitle">Show Subtitle</string>
-    <string name="subtitle_format">%d Crime (s)</string>
+
+    <plurals name="subtitle_format">
+        <item quantity="one">%d Crime </item>
+        <item quantity="other">%d Crimes</item>
+    </plurals>
+
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="delete_button">Delete Crime</string>
     <string name="delete_crime">Delete Crime</string>
     <string name="choose_suspect">Choose Suspect</string>
     <string name="send_crime_report">Send Crime Report</string>
+
+
+
+    <string name="crime_report_solve" >The case is solved</string>
+    <string name="crime_report_unsolve" >The case is not solved</string>
+    <string name="crime_report_no_suspect" >There is no suspect.</string>
+    <string name="crime_report_with_suspect" >The suspect is %s.</string>
+    <string name="crime_report" >%1$s!
+        The crime was discovered on %2$s. %3$s, and %4$s
+    </string>
+
+    <string name="crime_report_subject" >CriminalIntent Crime Report</string>
+    <string name="send_report" >Send crime report via</string>
+    <string name="call_suspect">Call Suspect</string>
 </resources>
