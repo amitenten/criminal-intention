@@ -2,6 +2,7 @@ package com.augmentis.ayp.crimin;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Amita on 7/18/2016.
@@ -29,6 +31,7 @@ public class CrimeListFragment extends Fragment {
 
     private static final int REQUEST_UPDATED_CRIME = 137;
     private static final java.lang.String SUBTITLE_VISIBLE_STATE = "SUBTITLE_VISIBLE";
+    private TextView instuctionText;
 
     private RecyclerView _crimeRecyclerView;
 
@@ -51,6 +54,8 @@ public class CrimeListFragment extends Fragment {
         if(savedInstanceState != null){
             _subtitleVisible = savedInstanceState.getBoolean(SUBTITLE_VISIBLE_STATE);
         }
+
+        instuctionText = (TextView) v.findViewById(R.id.instuction_text);
 
         updateUI();
 
@@ -144,6 +149,13 @@ public class CrimeListFragment extends Fragment {
 
         updateSubtitle();
 
+        if (crimes.size() == 0) {
+            instuctionText.setTextColor(Color.parseColor("#BDBDBD"));
+            instuctionText.setVisibility(View.VISIBLE);
+        } else {
+            instuctionText.setVisibility(View.INVISIBLE);
+            instuctionText.setVisibility(View.GONE);
+        }
     }
 
 

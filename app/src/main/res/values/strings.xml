@@ -32,4 +32,6 @@
     <string name="crime_report_subject" >CriminalIntent Crime Report</string>
     <string name="send_report" >Send crime report via</string>
     <string name="call_suspect">Call Suspect</string>
+    <string name="instuction_text">Add New Crime with Clip Icon</string>
+    <string name="denied_permission_to_call">Denied Permission</string>
 </resources>
