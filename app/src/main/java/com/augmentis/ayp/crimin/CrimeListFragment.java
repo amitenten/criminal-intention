@@ -230,9 +230,11 @@ public class CrimeListFragment extends Fragment {
             _solvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (buttonView.isPressed()) {
                         _crime.setSolved(isChecked);
                         CrimeLab.getInstance(getActivity()).updateCrime(_crime);
                         callBack.onCrimeSelect(_crime);
+                    }
                 }
             });
 

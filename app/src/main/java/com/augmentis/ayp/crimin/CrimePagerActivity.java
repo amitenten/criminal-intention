@@ -29,8 +29,11 @@ public class CrimePagerActivity extends SingleFragmentActivity implements CrimeF
         return intent;
     }
 
-    @Override
     public void onCrimeUpdated(Crime crime) {
+        //TODO LATER
+    }
+    @Override
+    public void onCrimeDelete() {
         //TODO LATER
     }
 }

@@ -44,4 +44,15 @@ public class CrimeListActivity extends SingleFragmentActivity implements CrimeLi
                 .findFragmentById(R.id.fragment_container);
         listFragment.updateUI();
     }
+
+    @Override
+    public void onCrimeDelete() {
+        CrimeListFragment listFragment = (CrimeListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_container);
+        CrimeFragment detailFragment = (CrimeFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.detail_fragment_container);
+        listFragment.updateUI();
+
+        getSupportFragmentManager().beginTransaction().detach(detailFragment).commit();
+    }
 }

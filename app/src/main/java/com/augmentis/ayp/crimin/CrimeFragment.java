@@ -84,7 +84,9 @@ public class CrimeFragment extends Fragment {
     }
 
     //call back
-    public interface Callbacks {void onCrimeUpdated(Crime crime);
+    public interface Callbacks {
+        void onCrimeUpdated(Crime crime);
+        void onCrimeDelete();
     }
 
     @Override
@@ -124,7 +126,7 @@ public class CrimeFragment extends Fragment {
         switch (item.getItemId()){
             case R.id.menu_item_delete_crime:
                 CrimeLab.getInstance(getActivity()).deleteCrime(crime.getId());
-                upDateCrime();
+                callbacks.onCrimeDelete();
                 return true;
 
             default:
@@ -306,10 +308,11 @@ public class CrimeFragment extends Fragment {
         crimeSlovedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (buttonView.isPressed()) {
                     crime.setSolved(isChecked);
                     Log.d(CrimeListFragment.TAG, "Crime: " + crime.toString());
-
                     upDateCrime();
+                }
             }
         });
 
