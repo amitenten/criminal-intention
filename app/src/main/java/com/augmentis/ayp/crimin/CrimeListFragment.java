@@ -1,6 +1,7 @@
 package com.augmentis.ayp.crimin;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,14 +39,27 @@ public class CrimeListFragment extends Fragment {
     private TextView instuctionText;
 
     private RecyclerView _crimeRecyclerView;
-
-
+    private Callback callBack;
 
     private CrimeAdapter _adapter;
     protected static final String TAG = "CRIME_LIST";
     private Integer[] crimePos;
 
     private boolean _subtitleVisible;
+
+    public interface Callback { void onCrimeSelect(Crime crime);}
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        callBack = (Callback) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        callBack = null;
+    }
 
     @Nullable
     @Override
@@ -59,6 +74,19 @@ public class CrimeListFragment extends Fragment {
         }
 
         instuctionText = (TextView) v.findViewById(R.id.instuction_text);
+
+        if (CrimeLab.getInstance(getActivity()).getCrime() != null){
+            Fragment newDetailFragment = CrimeFragment.newInstance
+                    (CrimeLab.getInstance(getActivity())
+                    .getCrime()
+                    .get(0)
+                    .getId());
+
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.detail_fragment_container, newDetailFragment)
+                    .commit();
+        }
 
         updateUI();
 
@@ -96,7 +124,9 @@ public class CrimeListFragment extends Fragment {
                 Crime crime = new Crime();
                 CrimeLab.getInstance(getActivity()).addCrime(crime);
                 Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
-                startActivity(intent);
+                updateUI();
+                callBack.onCrimeSelect(crime);
+                //startActivity(intent);
                 return true;
 
             case R.id.menu_item_show_subtitle:
@@ -200,9 +230,9 @@ public class CrimeListFragment extends Fragment {
             _solvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                    _crime.setSolved(isChecked);
-                    CrimeLab.getInstance(getActivity()).updateCrime(_crime);
+                        _crime.setSolved(isChecked);
+                        CrimeLab.getInstance(getActivity()).updateCrime(_crime);
+                        callBack.onCrimeSelect(_crime);
                 }
             });
 
@@ -232,8 +262,7 @@ public class CrimeListFragment extends Fragment {
         public void onClick(View v) {
             Log.d(TAG, "send position : " + _position);
             //Intent intent = CrimeActivity.newIntent(getActivity(), _crime.getId(), _position);
-            Intent intent = CrimePagerActivity.newIntent(getActivity(), _crime.getId());
-            startActivityForResult(intent, REQUEST_UPDATED_CRIME);
+            callBack.onCrimeSelect(_crime);
         }
     }
 
@@ -272,7 +301,6 @@ public class CrimeListFragment extends Fragment {
         public int getItemCount() {
             return _crimes.size();
         }
-
 
     }
 }

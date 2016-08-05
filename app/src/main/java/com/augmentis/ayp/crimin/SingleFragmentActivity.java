@@ -9,11 +9,17 @@ import android.util.Log;
 
 public abstract class SingleFragmentActivity extends AppCompatActivity {
 
+    private static final String TAG = "SingleFragmentActivity";
+
+    protected int getLayoutResId() {
+        return R.layout.activity_masterdetail;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single_fragment);
+        setContentView(getLayoutResId());
 
         Log.d(CrimeListFragment.TAG, "On create activity");
 
