@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="4dp"
     android:paddingBottom="16dp"
     style="?android:listSeparatorTextViewStyle"
     >
+    <ImageView
+        android:id="@+id/crime_list_photo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerInside"
+        android:background="@android:color/darker_gray"
+        android:cropToPadding="true"
+        android:layout_alignParentLeft="true"/>
 
-    <CheckBox
-        android:id="@+id/list_item_crime_solve_check_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:padding="4dp"
-        />
     <TextView
         android:id="@+id/list_item_crime_title_text_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="20sp"
         android:padding="4dp"
-        android:layout_toRightOf="@id/list_item_crime_solve_check_box"
         tools:text="Crime title"
+        android:layout_toRightOf="@id/crime_list_photo"
+        />
+    <CheckBox
+        android:id="@+id/list_item_crime_solve_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+
+        android:padding="4dp"
         />
 
     <TextView
@@ -32,6 +43,6 @@
         android:layout_height="wrap_content"
         android:padding="4dp"
         tools:text="Crime date"
-        android:layout_below="@+id/list_item_crime_title_text_view"
-        android:layout_toRightOf="@id/list_item_crime_solve_check_box" />
+        android:layout_toRightOf="@id/crime_list_photo"
+        android:layout_below="@id/list_item_crime_title_text_view" />
 </RelativeLayout>

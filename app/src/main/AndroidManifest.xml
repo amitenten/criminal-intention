@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.augmentis.ayp.crimin">
 
-    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
-    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
 
     <application
         android:allowBackup="true"
@@ -21,5 +23,4 @@
         <activity android:name=".CrimePagerActivity"
             android:parentActivityName=".CrimeListActivity"></activity>
     </application>
-
 </manifest>

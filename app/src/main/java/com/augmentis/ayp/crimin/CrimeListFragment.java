@@ -2,6 +2,7 @@ package com.augmentis.ayp.crimin;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,9 +19,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
@@ -181,6 +184,7 @@ public class CrimeListFragment extends Fragment {
         public TextView _titleTextView;
         public TextView _dateTextView;
         public CheckBox _solvedCheckBox;
+        public ImageView _imageView;
 
         Crime _crime;
         int _position;
@@ -205,16 +209,23 @@ public class CrimeListFragment extends Fragment {
             _dateTextView = (TextView)
                     itemView.findViewById(R.id.list_item_crime_date_text_view);
 
+   /*         _imageView = (ImageView)
+                    itemView.findViewById(R.id.crime_list_photo);*/
+
             itemView.setOnClickListener(this);
         }
 
         public void bind(Crime crime, int position) {
+
+            File photoFile = CrimeLab.getInstance(getActivity()).getPhotoFile(crime);
 
             _crime = crime;
             _position = position;
             _titleTextView.setText(_crime.getTitle());
             _dateTextView.setText(_crime.getCrimedate().toString());
             _solvedCheckBox.setChecked(_crime.isSolved());
+            /*Bitmap bitmap = PictureUtils.getScaledBitmap(photoFile.getPath(), getActivity());
+            _imageView.setImageBitmap(bitmap);*/
         }
 
         @Override
