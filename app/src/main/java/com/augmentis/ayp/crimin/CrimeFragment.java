@@ -105,7 +105,11 @@ public class CrimeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
+
         reloadCrimeFromDB();
+
+        photoFile = CrimeLab.getInstance(getActivity()).getPhotoFile(crime);
 
         if(photoFile != null) {
             Log.d(TAG, "Photo file = " + photoFile.getPath());
@@ -163,11 +167,8 @@ public class CrimeFragment extends Fragment {
     }
 
     private void reloadCrimeFromDB() {
-        setHasOptionsMenu(true);
         UUID crimeId = (UUID) getArguments().getSerializable(CRIME_ID);
         crime = CrimeLab.getInstance(getActivity()).getCrimesById(crimeId);
-
-        photoFile = CrimeLab.getInstance(getActivity()).getPhotoFile(crime);
     }
 
     @Override

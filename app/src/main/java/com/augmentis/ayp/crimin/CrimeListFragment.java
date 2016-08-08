@@ -47,7 +47,10 @@ public class CrimeListFragment extends Fragment {
 
     private boolean _subtitleVisible;
 
-    public interface Callback { void onCrimeSelect(Crime crime);}
+    public interface Callback {
+        void onCrimeSelect(Crime crime);
+        void onOpenSelect();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -75,18 +78,7 @@ public class CrimeListFragment extends Fragment {
 
         instuctionText = (TextView) v.findViewById(R.id.instuction_text);
 
-        if (CrimeLab.getInstance(getActivity()).getCrime() != null){
-            Fragment newDetailFragment = CrimeFragment.newInstance
-                    (CrimeLab.getInstance(getActivity())
-                    .getCrime()
-                    .get(0)
-                    .getId());
-
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.detail_fragment_container, newDetailFragment)
-                    .commit();
-        }
+        callBack.onOpenSelect();
 
         updateUI();
 
@@ -233,7 +225,7 @@ public class CrimeListFragment extends Fragment {
                     if (buttonView.isPressed()) {
                         _crime.setSolved(isChecked);
                         CrimeLab.getInstance(getActivity()).updateCrime(_crime);
-                        callBack.onCrimeSelect(_crime);
+                        //callBack.onCrimeSelect(_crime);
                     }
                 }
             });
